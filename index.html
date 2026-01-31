@@ -1,96 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANOUAR GAMES</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-        header {
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(90deg, #00ffea, #ff00f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .games {
-            display: flex;
-            gap: 20px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .game-card {
-            background: #111;
-            border: 2px solid #00ffea;
-            border-radius: 15px;
-            padding: 30px 50px;
-            cursor: pointer;
-            transition: transform 0.2s, border-color 0.2s;
-            text-align: center;
-            font-size: 1.2rem;
-        }
-        .game-card:hover {
-            transform: scale(1.05);
-            border-color: #ff00f7;
-        }
-        iframe {
-            width: 90%;
-            max-width: 1200px;
-            height: 700px;
-            border: none;
-            border-radius: 15px;
-            margin-bottom: 40px;
-        }
-        @media(max-width: 600px) {
-            .games {
-                flex-direction: column;
-                gap: 15px;
-            }
-            .game-card {
-                padding: 20px 30px;
-            }
-            iframe {
-                height: 500px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANOUAR GAMES</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+header {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00ffea, #ff00f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.games {
+    display: flex;
+    gap: 20px;
+    margin: 40px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.game-card {
+    background: #111;
+    border: 2px solid #00ffea;
+    border-radius: 15px;
+    padding: 30px 50px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    text-align: center;
+    font-size: 1.2rem;
+}
+.game-card:hover {
+    transform: scale(1.05);
+    border-color: #ff00f7;
+}
+.unity-container {
+    width: 100%;
+    height: 700px;
+    display: none;
+    position: relative;
+}
+iframe#robloxFrame {
+    width: 90%;
+    max-width: 1200px;
+    height: 700px;
+    border: none;
+    border-radius: 15px;
+}
+</style>
 </head>
 <body>
 
-    <header>ANOUAR GAMES</header>
+<header>ANOUAR GAMES</header>
 
-    <div class="games">
-        <div class="game-card" onclick="loadGame('https://frogiesarcade.win/algebra.html?url=https://nowgg.fun/apps/Grow-a-Garden/19903/Grow-a-Garden.html')">
-            Roblox
-        </div>
-        <div class="game-card" onclick="loadGame('https://rawcdn.githack.com/genizy/google-class/98d73056bfa9d476eb9fb3df8eaf418fba6d6f01/bad-parenting/')">
-            Bad Parenting
-        </div>
-        <div class="game-card" onclick="loadGame('https://cdn.jsdelivr.net/gh/genizy/web-port@main/amanda-the-adventurer/')">
-            Amanda The Adventure
+<div class="games">
+    <div class="game-card" onclick="showGame('roblox')">Roblox</div>
+    <div class="game-card" onclick="showGame('badparenting')">Bad Parenting</div>
+    <div class="game-card" onclick="showGame('amanda')">Amanda The Adventure</div>
+</div>
+
+<!-- Roblox iframe -->
+<iframe id="robloxFrame" class="unity-container"></iframe>
+
+<!-- Bad Parenting Unity -->
+<div id="badparenting" class="unity-container">
+    <div id="unity-container-bp" class="unity-desktop">
+        <canvas id="unity-canvas-bp" width=960 height=600 tabindex="-1"></canvas>
+        <div id="unity-loading-bar-bp">
+            <div id="unity-logo-bp"></div>
+            <div id="unity-progress-bar-empty-bp">
+                <div id="unity-progress-bar-full-bp"></div>
+            </div>
         </div>
     </div>
-
-    <iframe id="gameFrame" src=""></iframe>
-
     <script>
-        function loadGame(url) {
-            document.getElementById('gameFrame').src = url;
-        }
+    var canvas = document.getElementById("unity-canvas-bp");
+    var loadingBarFull = document.getElementById("unity-progress-bar-full-bp");
+    var loaderUrl = "https://rawcdn.githack.com/genizy/google-class/98d73056bfa9d476eb9fb3df8eaf418fba6d6f01/bad-parenting/Build/Build.loader.js";
+    var config = {
+        dataUrl: "https://rawcdn.githack.com/genizy/google-class/98d73056bfa9d476eb9fb3df8eaf418fba6d6f01/bad-parenting/Build/Build.data",
+        frameworkUrl: "https://rawcdn.githack.com/genizy/google-class/98d73056bfa9d476eb9fb3df8eaf418fba6d6f01/bad-parenting/Build/Build.framework.js",
+        codeUrl: "https://rawcdn.githack.com/genizy/google-class/98d73056bfa9d476eb9fb3df8eaf418fba6d6f01/bad-parenting/Build/Build.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "twoootwo",
+        productName: "Bad Parenting 1",
+        productVersion: "1.0",
+        showBanner: false,
+    };
+    var scriptBP = document.createElement("script");
+    scriptBP.src = loaderUrl;
+    scriptBP.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+            loadingBarFull.style.width = 100 * progress + "%";
+        });
+    };
+    document.body.appendChild(scriptBP);
     </script>
+</div>
+
+<!-- Amanda The Adventure Unity -->
+<div id="amanda" class="unity-container">
+    <div id="loading-text-amanda" style="color: white; font-size: 32px; text-align: center; margin-top: 20px;">LOADING...</div>
+    <div id="unity-container-amanda" class="unity-desktop" hidden>
+        <canvas id="unity-canvas-amanda" width=960 height=600></canvas>
+        <div id="unity-loading-bar-amanda">
+            <div id="unity-logo-amanda"></div>
+            <div id="unity-progress-bar-empty-amanda">
+                <div id="unity-progress-bar-full-amanda"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var canvasA = document.getElementById("unity-canvas-amanda");
+    var loadingBarFullA = document.getElementById("unity-progress-bar-full-amanda");
+    var loaderUrlA = "https://cdn.jsdelivr.net/gh/genizy/web-port@main/amanda-the-adventurer/Build/Build.loader.js";
+    var configA = {
+        dataUrl: "https://cdn.jsdelivr.net/gh/genizy/web-port@main/amanda-the-adventurer/Build/Build.data",
+        frameworkUrl: "https://cdn.jsdelivr.net/gh/genizy/web-port@main/amanda-the-adventurer/Build/Build.framework.js",
+        codeUrl: "https://cdn.jsdelivr.net/gh/genizy/web-port@main/amanda-the-adventurer/Build/Build.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "MangledMaw",
+        productName: "Amanda The Adventurer",
+        productVersion: "1.6.17b",
+        showBanner: null,
+    };
+    var scriptA = document.createElement("script");
+    scriptA.src = loaderUrlA;
+    scriptA.onload = () => {
+        createUnityInstance(canvasA, configA, (progress) => {
+            loadingBarFullA.style.width = 100 * progress + "%";
+        }).then(()=>{document.getElementById('loading-text-amanda').remove();});
+    };
+    document.body.appendChild(scriptA);
+    </script>
+</div>
+
+<script>
+function showGame(game) {
+    document.getElementById("robloxFrame").style.display = "none";
+    document.getElementById("badparenting").style.display = "none";
+    document.getElementById("amanda").style.display = "none";
+
+    if (game === "roblox") {
+        document.getElementById("robloxFrame").src = "https://site-porter-52af4ae9.base44.app/Viewer?id=PORTED7";
+        document.getElementById("robloxFrame").style.display = "block";
+    } else if (game === "badparenting") {
+        document.getElementById("badparenting").style.display = "block";
+    } else if (game === "amanda") {
+        document.getElementById("amanda").style.display = "block";
+        document.getElementById("unity-container-amanda").hidden = false;
+    }
+}
+</script>
 
 </body>
 </html>
