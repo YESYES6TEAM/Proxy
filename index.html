@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANOUAR GAMES</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #00ffea, #ff00f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .games {
+            display: flex;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .game-card {
+            background: #111;
+            border: 2px solid #00ffea;
+            border-radius: 15px;
+            padding: 30px 50px;
+            cursor: pointer;
+            transition: transform 0.2s, border-color 0.2s;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .game-card:hover {
+            transform: scale(1.05);
+            border-color: #ff00f7;
+        }
+        iframe {
+            width: 90%;
+            max-width: 1200px;
+            height: 700px;
+            border: none;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+        @media(max-width: 600px) {
+            .games {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .game-card {
+                padding: 20px 30px;
+            }
+            iframe {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>ANOUAR GAMES</header>
+
+    <div class="games">
+        <div class="game-card" onclick="loadGame('https://frogiesarcade.win/algebra.html?url=https://nowgg.fun/apps/Grow-a-Garden/19903/Grow-a-Garden.html')">
+            Roblox
+        </div>
+        <div class="game-card" onclick="loadGame('https://rawcdn.githack.com/genizy/google-class/98d73056bfa9d476eb9fb3df8eaf418fba6d6f01/bad-parenting/')">
+            Bad Parenting
+        </div>
+        <div class="game-card" onclick="loadGame('https://cdn.jsdelivr.net/gh/genizy/web-port@main/amanda-the-adventurer/')">
+            Amanda The Adventure
+        </div>
+    </div>
+
+    <iframe id="gameFrame" src=""></iframe>
+
+    <script>
+        function loadGame(url) {
+            document.getElementById('gameFrame').src = url;
+        }
+    </script>
+
+</body>
+</html>
